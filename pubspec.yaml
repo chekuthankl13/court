@@ -1,0 +1,31 @@
+name: courtclick
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.13.2
+
+dependencies:
+  dartz: ^0.10.1
+  dio: ^5.11.1
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^9.1.1
+  flutter_dotenv: ^6.0.1
+  freezed_annotation: ^3.1.0
+  get_it: ^9.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  build_runner: ^2.16.1
+  freezed: ^4.0.2
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - .env
+    - assets/images/
