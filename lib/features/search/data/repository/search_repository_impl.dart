@@ -13,7 +13,7 @@ class SearchRepositoryImpl extends SearchRepository {
   new({required this._remoteDataSource});
 
   @override
-  Future<Either<Failure, SearchEntity>> search({required String query}) async{
+  Future<Either<Failure, SearchEntity>> search({required String query}) async {
     try {
       final result = await _remoteDataSource.search(query: query);
       return Right(result);

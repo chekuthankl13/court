@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  
   AppTheme._();
 
   static const Color brandRed = Color(0xFFE50914);
@@ -9,9 +8,13 @@ class AppTheme {
   static const Color darkSurface = Color(0xFF181818);
   static const Color lightBackground = Color(0xFFF7F7F7);
 
+
+  static const String fontFamily = 'SFProDisplay';
+
   static final ThemeData darkTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
+    fontFamily: fontFamily,
     scaffoldBackgroundColor: darkBackground,
 
     colorScheme: const ColorScheme.dark(
@@ -135,6 +138,7 @@ class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
+    fontFamily: fontFamily,
     scaffoldBackgroundColor: lightBackground,
 
     colorScheme:

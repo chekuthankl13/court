@@ -11,10 +11,12 @@ class ComingCubit extends Cubit<ComingState> {
   ComingCubit({required this.getComingSoonUsecase})
     : super(ComingState.initial());
 
-  void loadComingSoon() async {
+
+  Future<void> loadComingSoon({bool refresh = false}) async {
     try {
-      emit(ComingState.loading());
+      if (!refresh) emit(ComingState.loading());
       var res = await getComingSoonUsecase(null);
+      if (isClosed) return;
       res.fold(
         (l) => emit(ComingState.error(error: l.error)),
         (r) => emit(ComingState.loaded(data: r)),

@@ -26,7 +26,6 @@ class _UserScreenState extends State<UserScreen> {
             Expanded(
               child: Center(
                 child: SingleChildScrollView(
-                  // Fixed width keeps a 2-column grid with "Add Profile" under the first column.
                   child: SizedBox(
                     width: 98 * 2 + 26,
                     child: Wrap(
@@ -99,7 +98,7 @@ class _ProfileTile extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            const SizedBox(height: 8),
+            spaceHeight(8),
             Text(
               name,
               maxLines: 1,
@@ -133,7 +132,7 @@ class _AddProfileTile extends StatelessWidget {
             ),
             child: const Icon(Icons.add, color: Colors.black, size: 48),
           ),
-          const SizedBox(height: 16),
+          spaceHeight(16),
           const Text(
             'Add Profile',
             style: TextStyle(color: Colors.white, fontSize: 13),

@@ -1,9 +1,7 @@
 class Config {
-
-
   static final _baseUrl = "https://api.themoviedb.org/3";
 
-  final imageUrl = "https://image.tmdb.org/t/p/w500";
+  static final imageUrl = "https://image.tmdb.org/t/p/w500";
 
   static final allWeek = "$_baseUrl/trending/all/week";
   static final nowPlaying = "$_baseUrl/movie/now_playing";

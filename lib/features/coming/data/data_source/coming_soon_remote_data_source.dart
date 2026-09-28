@@ -7,20 +7,17 @@ abstract interface class ComingSoonRemoteDataSource {
   Future<ComingSoonEntityModel> comingSoon();
 }
 
-
 class ComingSoonRemoteDataSourceImpl implements ComingSoonRemoteDataSource {
-
   final DioService _dioService;
 
   new({required this._dioService});
   @override
-  Future<ComingSoonEntityModel> comingSoon()async {
-     final data = await _dioService.get(url: Config.coming);
+  Future<ComingSoonEntityModel> comingSoon() async {
+    final data = await _dioService.get(url: Config.coming);
     if (data is! Map<String, dynamic>) {
       throw ServerException(error: 'Invalid search response.');
     }
 
     return ComingSoonEntityModel.fromJson(data);
   }
-  
 }

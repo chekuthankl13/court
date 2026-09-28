@@ -10,5 +10,4 @@ abstract class DashboardRepository {
   Future<Either<Failure, NowPlayingEntity>> nowPlaying();
   Future<Either<Failure, PopularEntity>> popular();
   Future<Either<Failure, TopRatedEntity>> topRated();
-
 }

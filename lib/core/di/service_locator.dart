@@ -29,7 +29,8 @@ void initDi() async {
   sl.registerLazySingleton<Dio>(
     () => Dio(
       BaseOptions(
-        baseUrl: dotenv.get('API_BASE_URL'),
+     
+        baseUrl: dotenv.get('API_BASE_URL', fallback: ''),
         connectTimeout: const Duration(seconds: 15),
         receiveTimeout: const Duration(seconds: 15),
         responseType: ResponseType.json,
@@ -40,7 +41,7 @@ void initDi() async {
 
   sl.registerLazySingleton<DioService>(
     () =>
-        DioService(dio: sl<Dio>(), getToken: () => dotenv.env['BEARER_TOKEN']),
+        DioService(dio: sl<Dio>(), getToken: () => dotenv.env['ACCESS_TOKEN']),
     dispose: (service) => service.dispose(),
   );
 
@@ -61,66 +62,60 @@ void initDi() async {
     () => GetTopRatedUsecase(dashboardRepository: sl()),
   );
 
-    sl.registerLazySingleton<GetAllWeekUsecase>(
+  sl.registerLazySingleton<GetAllWeekUsecase>(
     () => GetAllWeekUsecase(dashboardRepository: sl()),
   );
 
-   sl.registerLazySingleton<GetNowPlayingUsecase>(
+  sl.registerLazySingleton<GetNowPlayingUsecase>(
     () => GetNowPlayingUsecase(dashboardRepository: sl()),
   );
 
-    sl.registerLazySingleton<GetPopularUsecase>(
+  sl.registerLazySingleton<GetPopularUsecase>(
     () => GetPopularUsecase(dashboardRepository: sl()),
   );
 
-
-    sl.registerFactory<DashboardCubit>(
-    () => DashboardCubit(getAllWeekUsecase: sl(), getNowPlayingUsecase: sl(), getPopularUsecase: sl(), getTopRatedUsecase: sl()),
+  sl.registerFactory<DashboardCubit>(
+    () => DashboardCubit(
+      getAllWeekUsecase: sl(),
+      getNowPlayingUsecase: sl(),
+      getPopularUsecase: sl(),
+      getTopRatedUsecase: sl(),
+    ),
   );
 
-
-//\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/  search /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\ 
-
+  //\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/  search /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 
   sl.registerLazySingleton<SearchRemoteDataSource>(
     () => SearchRemoteDataSourceImpl(dioService: sl<DioService>()),
   );
 
   sl.registerLazySingleton<SearchRepository>(
-    () => SearchRepositoryImpl(
-      remoteDataSource: sl<SearchRemoteDataSource>(),
-    ),
+    () => SearchRepositoryImpl(remoteDataSource: sl<SearchRemoteDataSource>()),
   );
 
-    sl.registerLazySingleton<GetSearchUsecase>(
+  sl.registerLazySingleton<GetSearchUsecase>(
     () => GetSearchUsecase(repository: sl()),
   );
-  
 
-   sl.registerFactory<SearchCubit>(
-    () => SearchCubit(
-     getSearchUsecase: sl()
-    ),
-  );
+  sl.registerFactory<SearchCubit>(() => SearchCubit(getSearchUsecase: sl()));
 
-
-//\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ coming soon /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ 
-
+  //\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/ coming soon /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 
   sl.registerLazySingleton<ComingSoonRemoteDataSource>(
     () => ComingSoonRemoteDataSourceImpl(dioService: sl<DioService>()),
   );
 
   sl.registerLazySingleton<ComingSoonRepository>(
-    () => ComingSoonRepositoryImpl(remoteDataSource: sl<ComingSoonRemoteDataSource>()),
+    () => ComingSoonRepositoryImpl(
+      remoteDataSource: sl<ComingSoonRemoteDataSource>(),
+    ),
   );
 
   sl.registerLazySingleton<GetComingSoonUsecase>(
     () => GetComingSoonUsecase(repository: sl()),
   );
 
-  sl.registerFactory<ComingCubit>(() => ComingCubit(getComingSoonUsecase: sl()));
-
-
-
+  sl.registerFactory<ComingCubit>(
+    () => ComingCubit(getComingSoonUsecase: sl()),
+  );
 }

@@ -13,8 +13,8 @@ class ComingSoonRepositoryImpl extends ComingSoonRepository {
   new({required this._remoteDataSource});
 
   @override
-  Future<Either<Failure, ComingSoonEntity>> comingSoon() async{
-  try {
+  Future<Either<Failure, ComingSoonEntity>> comingSoon() async {
+    try {
       final result = await _remoteDataSource.comingSoon();
       return Right(result);
     } on ServerException catch (e) {

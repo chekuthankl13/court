@@ -11,20 +11,16 @@ abstract interface class DashBoardRemoteDatasource {
   Future<NowPlayingEntityModel> getNowPlaying();
   Future<PopularEntityModel> getPopular();
   Future<TopRatedEntityModel> getTopRated();
-
 }
 
-
 class DashBoardRemoteDatasourceImpl implements DashBoardRemoteDatasource {
-final DioService _dioService;
+  final DioService _dioService;
 
   new({required this._dioService});
 
   @override
-  Future<AllWeekEntityModel> getAllWeek()async {
-    final data = await _dioService.get(
-      url: Config.allWeek,  
-    );
+  Future<AllWeekEntityModel> getAllWeek() async {
+    final data = await _dioService.get(url: Config.allWeek);
     if (data is! Map<String, dynamic>) {
       throw ServerException(error: 'Invalid top-rated response.');
     }
@@ -33,7 +29,7 @@ final DioService _dioService;
   }
 
   @override
-  Future<NowPlayingEntityModel> getNowPlaying()async {
+  Future<NowPlayingEntityModel> getNowPlaying() async {
     final data = await _dioService.get(url: Config.nowPlaying);
     if (data is! Map<String, dynamic>) {
       throw ServerException(error: 'Invalid now playing response.');
@@ -43,7 +39,7 @@ final DioService _dioService;
   }
 
   @override
-  Future<PopularEntityModel> getPopular() async{
+  Future<PopularEntityModel> getPopular() async {
     final data = await _dioService.get(url: Config.popular);
     if (data is! Map<String, dynamic>) {
       throw ServerException(error: 'Invalid popular response.');
@@ -53,7 +49,7 @@ final DioService _dioService;
   }
 
   @override
-  Future<TopRatedEntityModel> getTopRated()async {
+  Future<TopRatedEntityModel> getTopRated() async {
     final data = await _dioService.get(url: Config.topRated);
     if (data is! Map<String, dynamic>) {
       throw ServerException(error: 'Invalid top rated response.');
@@ -61,5 +57,4 @@ final DioService _dioService;
 
     return TopRatedEntityModel.fromJson(data);
   }
-  
 }

@@ -16,8 +16,8 @@ class DashboardRepositoryImpl extends DashboardRepository {
   new({required this._remoteDatasource});
 
   @override
-  Future<Either<Failure, AllWeekEntity>> allWeek()async {
-     try {
+  Future<Either<Failure, AllWeekEntity>> allWeek() async {
+    try {
       final result = await _remoteDatasource.getAllWeek();
       return Right(result);
     } on ServerException catch (e) {
@@ -61,8 +61,8 @@ class DashboardRepositoryImpl extends DashboardRepository {
   }
 
   @override
-  Future<Either<Failure, NowPlayingEntity>> nowPlaying()async {
-     try {
+  Future<Either<Failure, NowPlayingEntity>> nowPlaying() async {
+    try {
       final result = await _remoteDatasource.getNowPlaying();
       return Right(result);
     } on ServerException catch (e) {
@@ -106,8 +106,8 @@ class DashboardRepositoryImpl extends DashboardRepository {
   }
 
   @override
-  Future<Either<Failure, PopularEntity>> popular() async{
-     try {
+  Future<Either<Failure, PopularEntity>> popular() async {
+    try {
       final result = await _remoteDatasource.getPopular();
       return Right(result);
     } on ServerException catch (e) {

@@ -1,19 +1,48 @@
 import 'package:courtclick/features/dashboard/domain/entity/all_week_entity.dart';
 
 class AllWeekEntityModel extends AllWeekEntity {
-  new({required super.page, required super.results, required super.totalPages, required super.totalResults});
-   factory AllWeekEntityModel.fromJson(Map<String, dynamic> json) => AllWeekEntityModel(
-    page: json["page"],
-    results: List<Result>.from(json["results"].map((x) => ResultModel.fromJson(x))),
-    totalPages: json["total_pages"],
-    totalResults: json["total_results"],
-  );
+  new({
+    required super.page,
+    required super.results,
+    required super.totalPages,
+    required super.totalResults,
+  });
+  factory AllWeekEntityModel.fromJson(Map<String, dynamic> json) =>
+      AllWeekEntityModel(
+        page: json["page"],
+        results: List<Result>.from(
+          json["results"].map((x) => ResultModel.fromJson(x)),
+        ),
+        totalPages: json["total_pages"],
+        totalResults: json["total_results"],
+      );
 }
 
 class ResultModel extends Result {
-  new({required super.adult, required super.backdropPath, required super.id, required super.title, required super.originalTitle, required super.overview, required super.posterPath, required super.mediaType, required super.originalLanguage, required super.genreIds, required super.popularity, required super.releaseDate, required super.softcore, required super.video, required super.voteAverage, required super.voteCount, required super.name, required super.originalName, required super.firstAirDate, required super.originCountry});
+  new({
+    required super.adult,
+    required super.backdropPath,
+    required super.id,
+    required super.title,
+    required super.originalTitle,
+    required super.overview,
+    required super.posterPath,
+    required super.mediaType,
+    required super.originalLanguage,
+    required super.genreIds,
+    required super.popularity,
+    required super.releaseDate,
+    required super.softcore,
+    required super.video,
+    required super.voteAverage,
+    required super.voteCount,
+    required super.name,
+    required super.originalName,
+    required super.firstAirDate,
+    required super.originCountry,
+  });
 
-    factory ResultModel.fromJson(Map<String, dynamic> json) => ResultModel(
+  factory ResultModel.fromJson(Map<String, dynamic> json) => ResultModel(
     adult: json["adult"],
     backdropPath: json["backdrop_path"],
     id: json["id"],
@@ -37,9 +66,8 @@ class ResultModel extends Result {
     firstAirDate: json["first_air_date"] == null
         ? null
         : DateTime.parse(json["first_air_date"]),
-    originCountry: json["origin_country"] 
-       
+    originCountry: json["origin_country"] == null
+        ? null
+        : List<String>.from(json["origin_country"]),
   );
-
-
 }

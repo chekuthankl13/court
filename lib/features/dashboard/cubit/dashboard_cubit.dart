@@ -1,4 +1,3 @@
-
 import 'package:courtclick/core/error/failure.dart';
 import 'package:courtclick/features/dashboard/domain/entity/all_week_entity.dart';
 import 'package:courtclick/features/dashboard/domain/entity/now_playing_entity.dart';
@@ -27,11 +26,11 @@ class DashboardCubit extends Cubit<DashboardState> {
     required this.getTopRatedUsecase,
   }) : super(DashboardState.initial());
 
-  void loadHome() async {
+  Future<void> loadHome({bool refresh = false}) async {
     try {
+      if (!refresh) emit(DashboardState.loading());
 
-
- final results = await (
+      final results = await (
         getAllWeekUsecase(null),
         getNowPlayingUsecase(null),
         getPopularUsecase(null),
@@ -44,7 +43,7 @@ class DashboardCubit extends Cubit<DashboardState> {
       final topRated = _getData(results.$4);
 
       if (isClosed) return;
-emit(
+      emit(
         DashboardState.loaded(
           week: week,
           nowPlaying: nowPlaying,
@@ -52,7 +51,6 @@ emit(
           topRated: topRated,
         ),
       );
-
     } on _DashboardLoadException catch (e) {
       if (!isClosed) {
         emit(DashboardState.error(error: e.message));
@@ -61,10 +59,7 @@ emit(
       emit(DashboardState.error(error: e.toString()));
     }
   }
-
-
 }
-
 
 //// error setup
 
@@ -80,4 +75,3 @@ class _DashboardLoadException implements Exception {
 
   final String message;
 }
-

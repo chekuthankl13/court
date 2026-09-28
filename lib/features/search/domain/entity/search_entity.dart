@@ -14,7 +14,7 @@ abstract class SearchEntity {
 
 abstract class SearchResult {
   final bool adult;
-  final String backdropPath;
+  final String? backdropPath;
   final List<int> genreIds;
   final int id;
   final String title;
@@ -22,8 +22,8 @@ abstract class SearchResult {
   final String originalTitle;
   final String overview;
   final double popularity;
-  final String posterPath;
-  final DateTime releaseDate;
+  final String? posterPath;
+  final DateTime? releaseDate;
   final bool softcore;
   final bool video;
   final double voteAverage;

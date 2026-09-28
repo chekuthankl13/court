@@ -1,3 +1,5 @@
+import 'package:courtclick/features/dashboard/presentation/movie_detail_screen.dart';
+import 'package:courtclick/features/dashboard/presentation/movie_item.dart';
 import 'package:courtclick/features/home/home_screen.dart';
 import 'package:courtclick/splash_screen.dart';
 import 'package:courtclick/user_screen.dart';
@@ -6,8 +8,8 @@ import 'package:flutter/material.dart';
 class AppRoutes {
   static const user = '/user';
   static const splash = '/splash';
-  static const onboarding = '/onboarding';
   static const home = '/home';
+  static const movieDetail = '/movie-detail';
 
   static Route<dynamic>? onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -18,6 +20,14 @@ class AppRoutes {
       case home:
         return _route(
           HomeScreen(user: settings.arguments as Map<String, String>),
+        );
+      case movieDetail:
+        var args = settings.arguments as Map<String, dynamic>;
+        return _route(
+          MovieDetailScreen(
+            movie: args['movie'] as MovieItem,
+            tag: args['tag'],
+          ),
         );
       default:
         return null;

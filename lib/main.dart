@@ -27,17 +27,16 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<DashboardCubit>()),
         BlocProvider(create: (context) => sl<ComingCubit>()),
         BlocProvider(create: (context) => sl<SearchCubit>()),
-
       ],
       child: MaterialApp(
-      debugShowCheckedModeBanner: false,
-      navigatorKey: navigatorKey,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.dark,
+        debugShowCheckedModeBanner: false,
+        navigatorKey: navigatorKey,
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: ThemeMode.dark,
         onGenerateRoute: AppRoutes.onGenerateRoute,
-      initialRoute: AppRoutes.splash,
-    )
+        initialRoute: AppRoutes.splash,
+      ),
     );
   }
 }

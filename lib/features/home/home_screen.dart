@@ -1,15 +1,26 @@
+import 'package:courtclick/core/theme/app_theme.dart';
+import 'package:courtclick/download_tab.dart';
+import 'package:courtclick/features/coming/presentation/comming_tab.dart';
+import 'package:courtclick/features/dashboard/presentation/dashboard_tab.dart';
 import 'package:courtclick/features/home/cubit/bottom_nav_cubit.dart';
+import 'package:courtclick/features/search/presentation/search_tab.dart';
+import 'package:courtclick/more_tab.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
-  /// Selected profile from the user screen: {"img": ..., "name": ...}
-  final Map<String, String> user;
+  const HomeScreen({super.key, required this.user, this.comingSoonCount = 2});
 
-  const new({super.key, required this.user});
+  final Map<String, String> user;
+  final int comingSoonCount;
 
   static const _tabs = [
-    (icon: Icons.home, activeIcon: Icons.home, label: 'Home'),
+    (
+      icon: CupertinoIcons.house,
+      activeIcon: CupertinoIcons.house_fill,
+      label: 'Home',
+    ),
     (icon: Icons.search, activeIcon: Icons.search, label: 'Search'),
     (
       icon: Icons.video_library_outlined,
@@ -32,80 +43,61 @@ class HomeScreen extends StatelessWidget {
         builder: (context, index) {
           return Scaffold(
             backgroundColor: Colors.black,
-            body: SafeArea(
-              child: IndexedStack(
-                index: index,
-                children: [
-                  for (final tab in _tabs)
-                    _DummyTab(title: tab.label, user: user),
-                ],
-              ),
+
+            body: IndexedStack(
+              index: index,
+              children: [
+                DashboardTab(userName: user['name'] ?? ''),
+                const SafeArea(child: SearchTab()),
+                const SafeArea(child: CommingTab()),
+                const SafeArea(child: DownloadTab()),
+                SafeArea(child: MoreTab(user: user)),
+              ],
             ),
+
             bottomNavigationBar: BottomNavigationBar(
               currentIndex: index,
               onTap: context.read<BottomNavCubit>().changeTab,
               type: BottomNavigationBarType.fixed,
-              backgroundColor: const Color(0xFF121212),
+              backgroundColor: AppTheme.darkSurface,
               selectedItemColor: Colors.white,
               unselectedItemColor: const Color(0xFF8C8C8C),
               selectedFontSize: 10,
               unselectedFontSize: 10,
               iconSize: 26,
+
               items: [
-                for (final tab in _tabs)
+                for (var i = 0; i < _tabs.length; i++)
                   BottomNavigationBarItem(
-                    icon: Icon(tab.icon),
-                    activeIcon: Icon(tab.activeIcon),
-                    label: tab.label,
+                    icon: i == 2
+                        ? Badge.count(
+                            count: comingSoonCount,
+                            isLabelVisible: comingSoonCount > 0,
+                            backgroundColor: const Color(0xFFE50914),
+                            textColor: Colors.white,
+                            maxCount: 99,
+                            child: Icon(_tabs[i].icon),
+                          )
+                        : Icon(_tabs[i].icon),
+
+                    activeIcon: i == 2
+                        ? Badge.count(
+                            count: comingSoonCount,
+                            isLabelVisible: comingSoonCount > 0,
+                            backgroundColor: const Color(0xFFE50914),
+                            textColor: Colors.white,
+                            maxCount: 99,
+                            child: Icon(_tabs[i].activeIcon),
+                          )
+                        : Icon(_tabs[i].activeIcon),
+
+                    label: _tabs[i].label,
                   ),
               ],
             ),
           );
         },
       ),
-    );
-  }
-}
-
-/// Placeholder for each tab until the real screens are implemented.
-class _DummyTab extends StatelessWidget {
-  final String title;
-  final Map<String, String> user;
-
-  const new({required this.title, required this.user});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Text(title, style: Theme.of(context).textTheme.headlineMedium),
-              const Spacer(),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                child: Image.asset(
-                  user['img']!,
-                  width: 32,
-                  height: 32,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Expanded(
-          child: Center(
-            child: Text(
-              '$title screen\nProfile: ${user['name']}',
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }
